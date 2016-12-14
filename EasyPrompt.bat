@@ -3,7 +3,6 @@ if exist log.txt del log.txt
 echo Easy Prompt Log >> log.txt
 echo If Easy Prompt crashes, please make a new issue on GitHub with the log file output >> log.txt
 echo The GitHub link is: https://github.com/CoolMan119/EasyPrompt >> log.txt
-echo THIS LOG CONTAINS NO PERSONAL INFO >> log.txt
 echo [%time%]: Program Launched >> log.txt
 set version = 2.0
 title Easy Prompt V2.0
@@ -144,6 +143,7 @@ if %cmd%==winver goto winver
 if %cmd%==apps goto apps
 if %cmd%==store goto store
 if %cmd%==pastebin goto pastebin
+if %cmd%==logout goto logout
 echo Invaild Command!
 goto typecmd
 
@@ -163,6 +163,7 @@ echo apps - List's all apps you have
 echo store - App store (Experimental)
 echo tweet - Tweet something!
 echo pastebin - Get a file from pastebin!
+echo logout - Logout Easy Prompt
 goto typecmd
 
 :clear
@@ -203,7 +204,7 @@ ver
 goto typecmd
 
 :apps
-dir "%cd%\Easy Prompt V2.0\Users\%user%\Apps\"
+dir "%cd%\Users\%user%\Apps\"
 goto typecmd
 
 :store
@@ -219,6 +220,7 @@ cls
 goto main
 
 :main
+cls
 echo --- HouseStore ---
 echo Apps:
 type "%cd%\applist.txt"
@@ -228,19 +230,39 @@ echo Type exit to exit
 echo ------------------
 echo.
 set /p app= "App: "
-if %app%==exit goto home
+if %app%==exit goto b
 goto installapp
+
+:mainb
+del author.txt
+del version.txt
+goto main
+
+:b
+cls
+echo --- HouseStore ---
+echo Cleaning up...
+if exist version.txt del version.txt
+if exist author.txt del author.txt
+if exist applist.txt del applist.txt
+goto home
 
 :installapp
 cls
 REM Installing version file
 wget --no-check-certificate https://raw.githubusercontent.com/CoolMan119/EasyPrompt/master/apps/%app%/version.txt
+wget --no-check-certificate https://raw.githubusercontent.com/CoolMan119/EasyPrompt/master/apps/%app%/author.txt
+title Easy Prompt V2.0
 set /p ver=<"%cd%\version.txt"
+set /p author=<"%cd%\author.txt"
 cls
 echo --- HouseStore ---
 echo Program Name: %app%
+echo By: %author%
 echo Version: %ver%
-set /p confirm= "Install (Y/N):"
+set /p confirm= "Install (Y/N): "
+if %confirm%==N goto mainb
+if %confirm%==n goto mainb
 cls
 echo --- HouseStore ---
 echo Downloading %app%...
@@ -251,22 +273,35 @@ move "program.bat" "%cd%\Users\%user%\Apps\%app%.bat"
 cls
 title Easy Prompt V2.0
 echo --- HouseStore ---
+echo Cleaning up...
+del version.txt
+del author.txt
+timeout /t 1 /nobreak >nul
+cls
+echo --- HouseStore ---
 echo Installation Complete!
 timeout /t 1 /nobreak >nul
 cls
 goto main
 
 :pastebin
-set /p url= "Code: "
+set /p code= "Code: "
 set /p file= "File: "
 cls
 echo Connecting to http://www.pastebin.com...
 echo.
 echo.
-wget --no-check-certificate http://www.pastebin.com/raw/%code%
-rename "%code%" "%file%"
+wget --no-check-certificate "http://www.pastebin.com/raw.php?i=%code%"
+rename "index.html" "%file%"
 cls
 echo Connecting to http://www.pastebin.com... Sucess
 echo Downloaded as %file%
 pause
 goto home
+
+:logout
+REM Log's the user off Easy Prompt
+cls
+echo -- Logout Sucessful --
+echo.
+goto user
