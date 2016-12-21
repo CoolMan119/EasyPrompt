@@ -17,4 +17,3 @@ New-Item -path $path -Name $file3 -Value C.Content -ItemType file -force
 New-Item -path $path -Name $file4 -Value D.Content -ItemType file -force
 New-Item -path $path -Name $file5 -Value E.Content -ItemType file -force
 echo Done!
-start $path\finish.bat
