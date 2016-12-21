@@ -6,4 +6,4 @@ Please make sure you have the latest update!
 # Why does wget downloader crash?
 
 wget-downloader will crash if your system does not allow powershell scripts to run.
-Open Windows PowerShell ISE as an administrator, and type the following into the shell: Set-ExecutionPolicy RemoteSigned
+Open Windows PowerShell ISE as an administrator, and type the following into the shell: `Set-ExecutionPolicy RemoteSigned`
