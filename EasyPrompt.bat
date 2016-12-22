@@ -245,6 +245,7 @@ echo Cleaning up...
 if exist version.txt del version.txt
 if exist author.txt del author.txt
 if exist applist.txt del applist.txt
+if exist type.txt del type.txt
 goto home
 
 :installapp
@@ -279,6 +280,7 @@ echo --- HouseStore ---
 echo Cleaning up...
 del version.txt
 del author.txt
+del type.txt
 timeout /t 1 /nobreak >nul
 cls
 echo --- HouseStore ---
