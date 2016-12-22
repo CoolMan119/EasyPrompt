@@ -252,12 +252,15 @@ cls
 REM Installing version file
 wget --no-check-certificate https://raw.githubusercontent.com/CoolMan119/EasyPrompt/master/apps/%app%/version.txt
 wget --no-check-certificate https://raw.githubusercontent.com/CoolMan119/EasyPrompt/master/apps/%app%/author.txt
+wget --no-check-certificate https://raw.githubusercontent.com/CoolMan119/EasyPrompt/master/apps/%app%/type.txt
 title Easy Prompt V2.0
 set /p ver=<"%cd%\version.txt"
 set /p author=<"%cd%\author.txt"
+set /p type=<"%cd%\type.txt"
 cls
 echo --- HouseStore ---
 echo Program Name: %app%
+echo Type: %type%
 echo By: %author%
 echo Version: %ver%
 set /p confirm= "Install (Y/N): "
@@ -266,10 +269,10 @@ if %confirm%==n goto mainb
 cls
 echo --- HouseStore ---
 echo Downloading %app%...
-wget --no-check-certificate https://raw.githubusercontent.com/CoolMan119/EasyPrompt/master/apps/%app%/program.bat
+wget --no-check-certificate https://raw.githubusercontent.com/CoolMan119/EasyPrompt/master/apps/%app%/program.%type%
 title Installing %app%
 echo Installing %app%...
-move "program.bat" "%cd%\Users\%user%\Apps\%app%.bat"
+move "program.bat" "%cd%\Users\%user%\Apps\%app%.%type%"
 cls
 title Easy Prompt V2.0
 echo --- HouseStore ---
