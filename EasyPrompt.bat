@@ -13,24 +13,23 @@ if exist Users goto user
 :user
 echo [%time%]: Prompting User to enter Username. >> log.txt
 echo Easy Prompt V2.0 Login
+if "%~1"=="1" echo Username Wrong!
 echo.
 set /p user= "Username: "
 echo [%time%]: User typed in. Checking Username... >> log.txt
-if exist Users\%user% goto pass
-if not exist Users\%user% goto userwrong
+if exist Users\%user% CALL :pass
+if not exist Users\%user% CALL :userwrong
+EXIT /B 0
 
 :userwrong
 cls
 echo [%time%]: Username Wrong! >> log.txt
-echo Easy Prompt V2.0 Login
-echo Error: Username Wrong!
-echo.
-set /p user= "Username: "
-if exist Users\%user% goto pass
-if not exist Users\%user% goto userwrong
+CALL :user 1
+EXIT /B 0
 
 :pass
 echo [%time%]: Username Correct! Prompting user to enter password. >> log.txt
+if "%~1"=="1" echo Error: Password Wrong!
 set /p pass= "Password: "
 set /p read=<"%cd%\Users\%user%\Password\password.txt"
 if %read%==%pass% echo [%time%]: Password Correct! >> log.txt && goto continue else goto passwrong
@@ -38,10 +37,8 @@ if %read%==%pass% echo [%time%]: Password Correct! >> log.txt && goto continue e
 :passwrong
 echo [%time%]: Password Wrong! >> log.txt
 cls
-echo Error: Password Wrong!
-set /p pass= "Password: "
-set /p read=<"%cd%\Users\%user%\Password\password.txt"
-if %read%==%pass% goto continue else goto passwrong
+CALL :pass 1
+EXIT /B 0
 
 :setup
 cls
